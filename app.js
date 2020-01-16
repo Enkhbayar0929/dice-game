@@ -31,24 +31,54 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     roundScore = roundScore + diceNumber;
     document.getElementById("current-" + activePlayer).textContent = roundScore;
   } else {
-    // 1 буусан тул тоглогчийн ээлжийг энэ хэсэгт сольж өгнө.
-    // Энэ тоглогчийн ээлжиндээ цуглуулсан оноог 0 болгоно.
-    roundScore = 0;
-    document.getElementById("current-" + activePlayer).textContent = 0;
-
-    // Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлнэ.
-    // Хэрвээ идэвхитэй тоглогч нь 0 байвал идэвхитэй тоглогчийг 1 болго.
-    // Хэрвээ идэвхитэй тоглогч нь 1 байвал идэвхитэй тоглогчийг 0 болго.
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-    // if (activePlayer === 0) {
-    //   activePlayer = 1;
-    // } else activePlayer = 0;
-
-    // Идэвхитэй эсэрийг зааж буй дугуй дүрсийг шилжүүлнэ.
-    document.querySelector(".player-0-panel").classList.toggle("active");
-    document.querySelector(".player-1-panel").classList.toggle("active");
-
-    // Шоог түр алга болгоно.
-    diceDom.style.display = "none";
+    switchToNextPlayer();
   }
 });
+
+// Hold товчны event listener
+document.querySelector(".btn-hold").addEventListener("click", function() {
+  // Уг тоглогч нь цуглуулсан оноог global оноон дээр нэмж өгнө.
+  scores[activePlayer] = scores[activePlayer] + roundScore;
+
+  // Дэлгэц дээрх оноог өөрчилнө.
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+
+  // Уг тоглогч хожсон (оноо нь 100 хүрсэн) - эсэхийг шалгах
+  if (scores[activePlayer] >= 100) {
+    // Ялсан тоглогчийн нэрийг Winner! болгож өөрчлөх
+    document.getElementById("name-" + activePlayer).textContent = "Winner!";
+    document
+      .querySelector("name-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector("name-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+    // Тоглогчийн ээлжийг сольно.
+    switchToNextPlayer();
+  }
+});
+
+// Энэ функц нь тоглох ээлжээ дараачийн тоглогч руу шилжүүлнэ.
+function switchToNextPlayer() {
+  // 1 буусан тул тоглогчийн ээлжийг энэ хэсэгт сольж өгнө.
+  // Энэ тоглогчийн ээлжиндээ цуглуулсан оноог 0 болгоно.
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = 0;
+
+  // Тоглогчийн ээлжийг нөгөө тоглогч руу шилжүүлнэ.
+  // Хэрвээ идэвхитэй тоглогч нь 0 байвал идэвхитэй тоглогчийг 1 болго.
+  // Хэрвээ идэвхитэй тоглогч нь 1 байвал идэвхитэй тоглогчийг 0 болго.
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+  // if (activePlayer === 0) {
+  //   activePlayer = 1;
+  // } else activePlayer = 0;
+
+  // Идэвхитэй эсэрийг зааж буй дугуй дүрсийг шилжүүлнэ.
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  // Шоог түр алга болгоно.
+  diceDom.style.display = "none";
+}
