@@ -59,6 +59,10 @@ document.querySelector(".btn-roll").addEventListener("click", function() {
     } else {
       switchToNextPlayer();
     }
+  } else {
+    alert(
+      "Togloom duussan bn. Ta New Game deer darj dahin ehluulne uu?\nBayrlalaa!"
+    );
   }
 });
 
@@ -73,7 +77,7 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       scores[activePlayer];
 
     // Уг тоглогч хожсон (оноо нь 100 хүрсэн) - эсэхийг шалгах
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       // Тоглоом дууссан төлөвт оруулна.
       isNewGame = false;
       // Ялсан тоглогчийн нэрийг Winner! болгож өөрчлөх
@@ -88,6 +92,10 @@ document.querySelector(".btn-hold").addEventListener("click", function() {
       // Тоглогчийн ээлжийг сольно.
       switchToNextPlayer();
     }
+  } else {
+    alert(
+      "Togloom duussan bn. Ta New Game deer darj dahin ehluulne uu?\nBayrlalaa!"
+    );
   }
 });
 
